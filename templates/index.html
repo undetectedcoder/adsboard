@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-container">
+    <form method="GET" action="{{ url_for('index') }}">
+        <input type="text" 
+               name="q" 
+               placeholder="Поиск по объявлениям..."
+               value="{{ request.args.get('q', '') }}">
+        <button type="submit">Найти</button>
+    </form>
+</div>
+
+<h1>Актуальные объявления</h1>
+
+{% if not ads %}
+    <p class="no-results">Ничего не найдено</p>
+{% endif %}
+
+{% for ad in ads %}
+<div class="ad-card">
+    <a href="{{ url_for('view_ad', id=ad.id) }}">
+        <h3>{{ ad.title }}</h3>
+    </a>
+    <p>{{ ad.content|truncate(150) }}</p>
+    <div class="ad-meta">
+        <span class="author">{{ ad.author_ref.username }}</span>
+        <span class="date">{{ ad.created_at|datetimeformat }}</span>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

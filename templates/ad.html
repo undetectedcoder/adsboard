@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ad-full">
+    <h1>{{ ad.title }}</h1>
+    
+    {% if ad.image %}
+    <div class="ad-image">
+        <img src="{{ url_for('static', filename='uploads/' + ad.image) }}" 
+             class="thumbnail"
+             width="300"
+             height="300">
+    </div>
+    {% endif %}
+    
+    <div class="ad-content">
+        <p>{{ ad.content }}</p>
+        <div class="ad-meta">
+            <p>Автор: {{ ad.author_ref.username }}</p>
+            <p>Телефон: {{ ad.author_ref.phone }}</p>
+            <p>Дата: {{ ad.created_at|datetimeformat }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
